@@ -31,4 +31,33 @@ public class ProductService {
         products.add(product);
         return product;
     }
+
+    public Product updateProduct(Product product, Integer id){
+        Product searchProduct = products.stream()
+                .filter(prod -> prod.getProdId() == id)
+                .findFirst()
+                .orElse(null);
+
+        if(!product.getProdName().isEmpty()){
+            searchProduct.setProdName(product.getProdName());
+        }
+        if( product.getPrice() != null){
+            searchProduct.setPrice(product.getPrice());
+        }
+
+        return searchProduct;
+    }
+
+    public String deleteProduct(Integer id){
+        int index = 0;
+        for(int i = 0; i < products.size();i++){
+            if(products.get(i).getProdId() == id){
+                index = i;
+                break;
+            }
+        }
+        products.remove(index);
+
+        return "Product deleted";
+    }
 }
